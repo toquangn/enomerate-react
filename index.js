@@ -11,10 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api', api); // Uses api route for REST services
 
-app.listen( PORT,function(){
-  console.log('Server runing on localhost:' + PORT);
-});
-
+// ============= HEROKU SETUP =================
+const path = require('path');
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'enomerate-react/build')));
@@ -23,6 +21,10 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'enomerate-react/build', 'index.html'));
   });
 }
+
+app.listen( PORT,function(){
+  console.log('Server runing on localhost:' + PORT);
+});
 
 // ============= REST SERVICES =================
 
