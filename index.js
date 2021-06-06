@@ -10,9 +10,19 @@ app.use(cors());  // Allows for cross origin resource access
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api', api); // Uses api route for REST services
+
 app.listen( PORT,function(){
   console.log('Server runing on localhost:' + PORT);
 });
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'enomerate-react')));
+// Handle React routing, return all requests to React app
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'enomerate-react/public', 'index.html'));
+  });
+}
 
 // ============= REST SERVICES =================
 
