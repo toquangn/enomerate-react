@@ -1,6 +1,8 @@
 // ============= NODE PACKAGE IMPORTS =================
 const express = require('express'); // Framework for writing server-side code
 const cors = require('cors'); // Import cors node package to resolve cross-origin issues
+const path = require('path');
+
 
 // ============= SERVER SETUP & STARTUP =================
 const PORT = process.env.PORT || 3001;  // Defines port number for server to listen to
@@ -12,13 +14,10 @@ app.use(express.json());
 app.use('/api', api); // Uses api route for REST services
 
 // ============= HEROKU SETUP =================
-const path = require('path');
 if (process.env.NODE_ENV === 'production') {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'enomerate-react/build')));
-// Handle React routing, return all requests to React app
-  app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'enomerate-react/build', 'index.html'));
+  app.use(express.static(path.join(__dirname, 'build')));
+  app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 }
 
