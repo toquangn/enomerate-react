@@ -19,7 +19,7 @@ function Search () {
       setStatus('Locating...');
       navigator.geolocation.getCurrentPosition(async (pos) => {
         setStatus(null);
-        const res = await fetch(`http://localhost:3001/api/${pos.coords.latitude}/${pos.coords.longitude}/${max}`);
+        const res = await fetch(`api/${pos.coords.latitude}/${pos.coords.longitude}/${max}`);
         const data = await res.json();
         shuffle(data);
         setRestaurants(data);
