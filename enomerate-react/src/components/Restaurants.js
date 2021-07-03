@@ -79,7 +79,6 @@ function Restaurants () {
         <button className='discard-button' onClick={() => swipe('left')}>Discard</button>
         <button className='keep-button' onClick={() => swipe('right')}>Keep</button>
       </div>
-      {lastDirection ? <h2 key={lastDirection} className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText'>Swipe a card or press a button to get started!</h2>}
     </div>
   )
 }
