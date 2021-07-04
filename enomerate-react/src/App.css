@@ -53,7 +53,7 @@ h2 {
 .cardContainer {
   width: 90vw;
   max-width: 300px;
-  height: 73vh;
+  height: 500px;
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.816);
   border-radius: 20px;
 }
@@ -63,7 +63,7 @@ h2 {
   background-color: #fff;
   width: 80vw;
   max-width: 300px;
-  height: 73vh;
+  height: 500px;
   border-radius: 20px;
   background-size: cover;
   background-position: center;
@@ -134,8 +134,18 @@ h2 {
 
 }
 
+.infoText {
+  width: 100%;
+  height: 28px;
+  justify-content: center;
+  display: flex;
+  color: #fff;
+  animation-name: popup;
+  animation-duration: 800ms;
+}
+
 .buttons {
-  padding-top:1vh;
+  padding-top:25px;
   margin: 20px;
   display: flex;
 }
