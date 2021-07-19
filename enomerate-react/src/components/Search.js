@@ -35,7 +35,7 @@ function Search () {
       <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
       <div className='cardContainer'> 
           <div className='card'>
-            <div className='cardDetails' style={{textAlign:'center'}}>
+            <div className='searchDetails' style={{textAlign:'center'}}>
             <h4 className='searchInstructions'>Amount of places to choose from:</h4>
             <h1 className='maxLabel'>{max}</h1>
             <Slider
