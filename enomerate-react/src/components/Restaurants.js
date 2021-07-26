@@ -14,13 +14,7 @@ function Restaurants () {
 
 
   const childRefs = useMemo(() => Array(restaurants.length).fill(0).map(i => React.createRef()), [restaurants])
-
-  const swiped = (direction, nameToDelete) => {
-    //console.log('removing: ' + nameToDelete)
-    setLastDirection(direction)
-    alreadyRemoved.push(nameToDelete)
-  }
-
+  
   const swipe = async (dir) => {
     const cardsLeft = restaurants.filter(restaurant => !alreadyRemoved.includes(restaurant.id))
     if (cardsLeft.length) {
@@ -46,13 +40,18 @@ function Restaurants () {
     }
   }
 
+  const swiped = (direction, nameToDelete) => {
+    setLastDirection(direction)
+    alreadyRemoved.push(nameToDelete)
+  }
+
   return (
     <div>
       <link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
       <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
       <div className='cardContainer'>
         {restaurants.map((restaurant, index) =>
-          <TinderCard ref={childRefs[index]} className='swipe' key={restaurant.name} onSwipe={(dir) => swiped(dir, restaurant.name)}>
+          <TinderCard ref={childRefs[index]} className='swipe' key={restaurant.name} preventSwipe={['up','down']} onSwipe={(dir) => swiped(dir, restaurant.name)}>
             <div className='card'>
               <div style={{ backgroundImage: 'url(' + restaurant.image_url + ')' }} className='cardThumbnail'></div>
               <div className='cardDetails'>
@@ -79,6 +78,7 @@ function Restaurants () {
         <button className='discard-button' onClick={() => swipe('left')}>Discard</button>
         <button className='keep-button' onClick={() => swipe('right')}>Keep</button>
       </div>
+      {lastDirection ? <h2 key={lastDirection} className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText'>Swipe a card or press a button to get started!</h2>}
     </div>
   )
 }
