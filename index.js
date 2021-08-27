@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(PORT,function(){
-  console.log('Server runing on localhost:' + PORT);
+  console.log('Server running on localhost:' + PORT);
 });
 
 // ============= REST SERVICES =================

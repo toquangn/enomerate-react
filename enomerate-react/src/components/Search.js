@@ -18,11 +18,13 @@ function Search () {
     } else {
       setStatus('Locating...');
       navigator.geolocation.getCurrentPosition(async (pos) => {
-        setStatus(null);
-        const res = await fetch(`api/${pos.coords.latitude}/${pos.coords.longitude}/${max}`);
-        const data = await res.json();
-        shuffle(data);
-        setRestaurants(data);
+      setStatus(null);
+      await fetch(`api/${pos.coords.latitude}/${pos.coords.longitude}/${max}`)
+        .then(res => res.json())
+        .then(data => {
+          shuffle(data);
+          setRestaurants(data);
+        });
       }, () => {
         setStatus('Unable to retrieve your location');
       });
