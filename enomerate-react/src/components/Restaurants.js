@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useMemo, useContext } from 'react';
 import TinderCard from 'react-tinder-card';
 import StarRatings from 'react-star-ratings';
 import { RestaurantsContext, BestContext, DoneContext } from '../App';
@@ -6,22 +6,46 @@ import { RestaurantsContext, BestContext, DoneContext } from '../App';
 const alreadyRemoved = []
 
 function Restaurants () {
-  const [lastDirection, setLastDirection] = useState()
-
   const { best, setBest } = useContext(BestContext)
-  const { restaurants } = useContext(RestaurantsContext)
-  const { setDone } = useContext(DoneContext)
-
+  const { restaurants, setRestaurants } = useContext(RestaurantsContext)
+  const { done, setDone } = useContext(DoneContext)
 
   const childRefs = useMemo(() => Array(restaurants.length).fill(0).map(i => React.createRef()), [restaurants])
   
-  const swipe = async (dir) => {
+  const swipe = (dir) => {
     const cardsLeft = restaurants.filter(restaurant => !alreadyRemoved.includes(restaurant.id))
     if (cardsLeft.length) {
       const toBeRemoved = cardsLeft[cardsLeft.length - 1].id // Find the card object to be removed
       const index = restaurants.map(restaurant => restaurant.id).indexOf(toBeRemoved) // Find the index of which to make the reference to
       alreadyRemoved.push(toBeRemoved) // Make sure the next card gets removed next time if this card do not have time to exit the screen
-      await childRefs[index].current.swipe(dir) // Swipe the card!
+      if (!done)
+      childRefs[index].current.swipe(dir) // Swipe the card!      
+    }
+    setRestaurants(cardsLeft);
+  }
+  
+
+  const swiped = (dir, index) => {
+    // Assign best restaurant candidate on first pass
+    if (dir === 'right' && !best) {
+      setBest(restaurants[index])
+    }
+    // Overrides current best restaurant, completes exploration
+    if (dir === 'right' && best) {
+      setBest(restaurants[index])
+      setDone(true);
+    }    
+    // Assign best restaurant to last index when none chosen
+    if (restaurants.length === 1) {
+      if (!best) setBest(restaurants[index]);
+      setDone(true);
+    }
+    /*
+    const cardsLeft = restaurants.filter(restaurant => !alreadyRemoved.includes(restaurant.id))
+    if (cardsLeft.length) {
+      const toBeRemoved = cardsLeft[cardsLeft.length - 1].id // Find the card object to be removed
+      const index = restaurants.map(restaurant => restaurant.id).indexOf(toBeRemoved) // Find the index of which to make the reference to
+      alreadyRemoved.push(toBeRemoved) // Make sure the next card gets removed next time if this card do not have time to exit the screen
 
       // Assign best restaurant candidate on first pass
       if (dir === 'right' && !best) {
@@ -38,11 +62,8 @@ function Restaurants () {
         setDone(true);
       }
     }
-  }
-
-  const swiped = (direction, nameToDelete) => {
-    setLastDirection(direction)
-    alreadyRemoved.push(nameToDelete)
+    setRestaurants(cardsLeft);
+    */
   }
 
   return (
@@ -51,7 +72,7 @@ function Restaurants () {
       <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
       <div className='cardContainer'>
         {restaurants.map((restaurant, index) =>
-          <TinderCard ref={childRefs[index]} className='swipe' key={restaurant.name} preventSwipe={['up','down']} onSwipe={(dir) => swiped(dir, restaurant.name)}>
+          <TinderCard ref={childRefs[index]} className='swipe' key={restaurant.name} preventSwipe={['up','down']} onSwipe={(dir) => swiped(dir, index)}>
             <div className='card'>
               <div style={{ backgroundImage: 'url(' + restaurant.image_url + ')' }} className='cardThumbnail'></div>
               <div className='cardDetails'>
