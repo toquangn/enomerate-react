@@ -1,3 +1,9 @@
+body, html {
+  overflow: hidden
+}
+body {
+  position: relative;
+}
 #root {
   text-align: center;
   display: flex;
