@@ -8,39 +8,42 @@ const alreadyRemoved = new Set();
 function Restaurants () {
   const { best, setBest } = useContext(BestContext);
   const { restaurants, setRestaurants } = useContext(RestaurantsContext);
-  const { setDone } = useContext(DoneContext);
+  const { done, setDone } = useContext(DoneContext);
 
   const childRefs = useMemo(() => Array(restaurants.length).fill(0).map(i => React.createRef()), [restaurants.length]);
 
-  const swiped = async (dir, idToDelete) => {
+  const swiped = (dir, idToDelete) => {
     alreadyRemoved.add(idToDelete);
-    //console.log('[swiped] - idToDelete:', idToDelete);
-    //console.log('[swiped] - alreadyRemoved:', alreadyRemoved);
-    //console.log('[swiped] - restaurants:',restaurants);
-    //console.log('[swiped] - childRefs:',childRefs);
+    console.log('[swiped]');
   }
   
-
-  const outOfFrame = (dir,restaurantID) => {
+  
+  const handleCardLeftScreen = (dir,restaurant_info) => {
     // Assign best restaurant candidate on first pass
     if (dir === 'right' && !best) {
-      setBest(restaurants.at(-1))
+      console.log('=== BEST NOT SET ===');
+      setBest(restaurant_info);
     }
     // Overrides current best restaurant, completes exploration
     if (dir === 'right' && best) {
-      setBest(restaurants.at(-1))
+      console.log('=== BEST SET ===');
+      setBest(restaurant_info)
       setDone(true);
     }    
     // Assign best restaurant to last index when none chosen
     if (restaurants.length === 1) {
-      if (!best) setBest(restaurants.at(-1));
+      if (!best) setBest(restaurant_info);
       setDone(true);
     }
-    let restaurantsState = restaurants.filter(restaurant => restaurant.id !== restaurantID);
-    setRestaurants(restaurantsState);
-    //console.log('outOfFrame - childRefs:', childRefs);
-    //console.log('[outOfFrame] - restaurants:',restaurants);
+    console.log('[handleCardLeftScreen] - dir:', dir);
+    console.log('[handleCardLeftScreen] - best:', best);
+    console.log('[handleCardLeftScreen] - done:', done);
+
+    //console.log('[handleCardLeftScreen] - alreadyRemoved:', alreadyRemoved);
+    setRestaurants(restaurants.filter(restaurant => !alreadyRemoved.has(restaurant.id)));
+    //console.log('[handleCardLeftScreen] - restaurants:', restaurants);
   }
+  
 
   const swipe = async (dir) => {
     let cardsLeft = restaurants.filter(restaurant => !alreadyRemoved.has(restaurant.id))
@@ -50,7 +53,7 @@ function Restaurants () {
       alreadyRemoved.add(toBeRemoved) // Make sure the next card gets removed next time if this card do not have time to exit the screen
       await childRefs[index].current.swipe(dir) // Swipe the card!      
     }
-    //console.log('[swipe] - restaurants:',restaurants);
+    console.log('[swipe]');
   }
   
 
@@ -65,9 +68,8 @@ function Restaurants () {
             className='swipe' 
             key={restaurant.id} 
             preventSwipe={['up','down']} 
-            flickOnSwipe={false}
-            onSwipe={(dir) => swiped(dir, restaurant.id)} 
-            onCardLeftScreen={(dir) => outOfFrame(dir, restaurant.id)}>
+            onSwipe={(dir) => swiped(dir, restaurant.id)}
+            onCardLeftScreen={(dir) => handleCardLeftScreen(dir,restaurant)}>
             <div className='card'>
               <div style={{ backgroundImage: 'url(' + restaurant.image_url + ')' }} className='cardThumbnail'></div>
               <div className='cardDetails'>

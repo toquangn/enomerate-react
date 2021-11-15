@@ -1,5 +1,6 @@
-body, html {
-  overflow: hidden
+body,
+html {
+  overflow: hidden;
 }
 body {
   position: relative;
@@ -14,14 +15,14 @@ body {
   background: #ff7e26;
 }
 
-#root>div {
+#root > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.app>div {
+.app > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,24 +33,24 @@ body {
   flex-direction: row !important;
 }
 
-.row>* {
+.row > * {
   margin: 5px;
 }
 
 h1 {
-  font-family: 'Trebuchet MS', sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   color: #fff;
-  text-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
+  text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
 }
 
 .maxLabel {
-  color:#2D3538;
-  font-size:75px;
+  color: #2d3538;
+  font-size: 75px;
 }
 
 h2 {
-  font-family: 'Trebuchet MS', sans-serif;
-  color: #2D3538;
+  font-family: "Trebuchet MS", sans-serif;
+  color: #2d3538;
 }
 
 .swipe {
@@ -91,38 +92,37 @@ h2 {
 }
 
 .cardDetails {
-  padding:10px;
-  text-align:left;
+  padding: 10px;
+  text-align: left;
   height: 20vh;
 }
 
 .searchDetails {
-  padding:10px;
-  text-align:left;
+  padding: 10px;
+  text-align: left;
 }
 
 .swipe:last-of-type {
-
 }
 
 .card h2 {
-  margin-top:10px;
-  margin-bottom:5px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .card h3 {
-  font-family: 'Trebuchet MS', sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   padding: 15px;
-  color: #2D3538;
+  color: #2d3538;
 }
 
 .searchInstructions {
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size:24px;
-  color: #2D3538;
-  padding-top:40px;
-  padding-left:20px;
-  padding-right:20px;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 24px;
+  color: #2d3538;
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .status {
@@ -135,15 +135,14 @@ h2 {
 }
 
 .categories {
-  padding-top:8px;
-  word-wrap:break-word;
+  padding-top: 8px;
+  word-wrap: break-word;
   color: #3e4244;
-  font-size:16px;
-  font-style:italic;
+  font-size: 16px;
+  font-style: italic;
 }
 
 .flex {
-
 }
 
 .infoText {
@@ -157,7 +156,7 @@ h2 {
 }
 
 .buttons {
-  padding-top:25px;
+  padding-top: 25px;
   margin: 20px;
   display: flex;
 }
@@ -173,16 +172,16 @@ h2 {
   margin: 0 10px;
   font-weight: bolder;
   width: 160px;
-  box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
 }
 .search-button {
   background-color: #2e7cd5;
 }
 .keep-button {
-  background-color: #74C85D;
+  background-color: #74c85d;
 }
 .discard-button {
-  background-color: #D54C2E;
+  background-color: #d54c2e;
 }
 
 .buttons button:hover {
@@ -190,15 +189,29 @@ h2 {
 }
 
 .restaurantName:hover {
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 @keyframes popup {
-  0%   { transform: scale(1,1) }
-  10%  { transform: scale(1.1,1.1) }
-  30%  { transform: scale(.9,.9) }
-  50%  { transform: scale(1,1) }
-  57%  { transform: scale(1,1) }
-  64%  { transform: scale(1,1) }
-  100% { transform: scale(1,1) }
+  0% {
+    transform: scale(1, 1);
+  }
+  10% {
+    transform: scale(1.1, 1.1);
+  }
+  30% {
+    transform: scale(0.9, 0.9);
+  }
+  50% {
+    transform: scale(1, 1);
+  }
+  57% {
+    transform: scale(1, 1);
+  }
+  64% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
 }
