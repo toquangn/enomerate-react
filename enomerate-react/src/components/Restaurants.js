@@ -12,7 +12,7 @@ function Restaurants () {
 
   const childRefs = useMemo(() => Array(restaurants.length).fill(0).map(i => React.createRef()), [restaurants.length]);
 
-  const swiped = (dir, idToDelete) => {
+  const swiped = (idToDelete) => {
     alreadyRemoved.add(idToDelete);
     console.log('[swiped]');
   }
@@ -68,7 +68,7 @@ function Restaurants () {
             className='swipe' 
             key={restaurant.id} 
             preventSwipe={['up','down']} 
-            onSwipe={(dir) => swiped(dir, restaurant.id)}
+            onSwipe={() => swiped(restaurant.id)}
             onCardLeftScreen={(dir) => handleCardLeftScreen(dir,restaurant)}>
             <div className='card'>
               <div style={{ backgroundImage: 'url(' + restaurant.image_url + ')' }} className='cardThumbnail'></div>
